@@ -23,19 +23,20 @@ public class Main {
             byte[] chars = new byte[10];
             for (int j = 0; j < 10; j++)   chars[j] = archivo.readByte();
 
-            archivo.seek(archivo.getFilePointer()  + 1);
-            byte[] Campo = new byte[1];
-            Campo[0] = archivo.readByte();
+            archivo.skipBytes(1);
 
+            byte[] Campo = new byte[1];// byte del  tipo de campo
+            Campo[0] = archivo.readByte();
             archivo.skipBytes(3);//salta el  byte de long de campo
-            short des = archivo.readShort();
+            short longCampo= archivo.readShort();// Longitud del campo (en bytes)
             byte decimales = archivo.readByte();//numero de decimales
 
-            System.out.printf("| %s |   %s ,  %4d, %4d %n", new String(chars), new String(Campo), des, decimales );
-
+            System.out.printf("| %8s |   %1s ,  %3d, %3d %n", new String(chars), new String(Campo), longCampo, decimales );
+            //                      ^ imprime todos los valores :)
             archivo.skipBytes(14);// se salta los bytes que no interesan
         }
         System.out.println("=======================");
+        //https://www.whitetown.com/es/misc/dbf/
     }
 
     public static void main(String[] args) throws IOException {
